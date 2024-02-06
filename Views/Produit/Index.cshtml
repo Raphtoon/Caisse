@@ -1,0 +1,67 @@
+﻿@model List<Produit>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste des produits : @Model.Count</h1>
+
+<p>
+    <a asp-action="Form"  class="btn btn-info" >Ajouter un produit</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Quantite)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Categorie)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.PicturePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)€
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantite) @(item.Quantite > 1 ? "pièces" : "pièce")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categorie.Nom)
+                </td>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.PicturePath)" alt="Description de l'image" class="img-thumbnail" style="width: 4vw" />
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Form" asp-route-id="@item.Id">Modifier le produit</a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-primary" asp-action="AddToCart" asp-route-id="@item.Id">Ajouter au panier</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

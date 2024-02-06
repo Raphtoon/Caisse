@@ -1,0 +1,70 @@
+﻿@model Dictionary<int, Produit>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+@if(Model.Count > 0){
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Description)
+            </th>
+            <th>
+                    <strong>Prix total</strong>
+                </th>
+            <th>
+                <strong>Quantité souhaitée</strong>
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.Categorie)
+            </th>
+            <th>
+                @Html.DisplayNameForInnerType((Produit model) => model.PicturePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value.Nom)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Value.Description)
+                </td>
+                <td>
+                        <p>@(@item.Value.Price * @item.Value.Quantite)€</p>
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Value.Quantite)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Value.Categorie.Nom)
+                </td>
+                <td>
+                        <img src="@Html.DisplayFor(modelItem => item.Value.PicturePath)" alt="Description de l'image" class="img-thumbnail" style="width: 3.5vw;" />
+                </td>
+                <td>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Key">Details</a>
+                        <a class="btn btn-danger" asp-action="RemoveToCart" asp-route-id="@item.Key">Delete</a>
+                </td>
+@*                 <td>
+                        @item.Value
+                </td> *@
+            </tr>
+        }
+    </tbody>
+    </table>
+}
+else
+{
+    <p>Aucun élément dans le panier !</p>
+}
